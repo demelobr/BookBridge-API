@@ -3,6 +3,7 @@ from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 
 from .resources.users import users_blueprint
+from .resources.clubs import clubs_blueprint
 from sql_alchemy import db
 
 import os
@@ -18,5 +19,6 @@ def create_app():
     jwt = JWTManager(app)
 
     app.register_blueprint(users_blueprint)
+    app.register_blueprint(clubs_blueprint)
 
     return app
