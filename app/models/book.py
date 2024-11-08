@@ -6,7 +6,7 @@ class Book(db.Model):
     description = db.Column(db.String(250), nullable=False)
     gender = db.Column(db.String(20), nullable=False)
     registered_by = db.Column(db.String, db.ForeignKey('user.email'), nullable=False)
-    #reviews = db.relationship('Review', backref='book', lazy=True)
+    reviews = db.relationship('Review', backref='book', lazy=True)
 
     @classmethod
     def book_exists(cls, title):
