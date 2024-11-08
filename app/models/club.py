@@ -1,10 +1,16 @@
 from sql_alchemy import db
 
+# Tabela de associação para a relação muitos-para-muitos entre Club e Book
+club_book = db.Table('club_book',
+    db.Column('club_id', db.Integer, db.ForeignKey('club.id'), primary_key=True),
+    db.Column('book_id', db.Integer, db.ForeignKey('book.id'), primary_key=True)
+)
+
 class Club(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # books = db.relationship('Book', secondary=club_book, backref=db.backref('clubs', lazy='dynamic'))
+    books = db.relationship('Book', secondary=club_book, backref=db.backref('clubs', lazy='dynamic'))
     
     @classmethod
     def club_exists(cls, name):
