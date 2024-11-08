@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 from .resources.users import users_blueprint
 from .resources.clubs import clubs_blueprint
+from .resources.books import books_blueprint
 from sql_alchemy import db
 
 import os
@@ -20,5 +21,6 @@ def create_app():
 
     app.register_blueprint(users_blueprint)
     app.register_blueprint(clubs_blueprint)
+    app.register_blueprint(books_blueprint)
 
     return app
