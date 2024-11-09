@@ -37,13 +37,13 @@ def register_club():
 @clubs_blueprint.route('/clubs/<string:name>', methods=['GET'])
 def get_club(name):
     """
-    Retorna informações de um clube existente.
+    Retorna informações de um clube existente, incluindo todos os livros relacionados.
 
     Este endpoint recebe o nome do clube pela URL,
-    verifica se o clube existe e retorna suas informações.
+    verifica se o clube existe e retorna suas informações juntamente com os livros relacionados.
     
     Retorna:
-        Response: Uma resposta JSON com as informações do clube ou uma mensagem de erro e o código de status HTTP apropriado.
+        Response: Uma resposta JSON com as informações do clube e seus livros, ou uma mensagem de erro e o código de status HTTP apropriado.
     """
     club = Club.query.filter_by(name=name).first()
 
@@ -52,8 +52,22 @@ def get_club(name):
 
     owner = User.query.filter_by(id=club.owner_id).first()
 
-    return jsonify({"name" : "{}".format(club.name),
-                    "owner" : "{}".format(owner.email)}), 200  # OK
+    books = []
+    for book in club.books:
+        book_data = {
+            'id': book.id,
+            'title': book.title,
+            'description': book.description,
+            'gender': book.gender,
+            'registered_by': book.registered_by
+        }
+        books.append(book_data)
+
+    return jsonify({
+        "name" : club.name,
+        "owner" : owner.email,
+        "books" : books
+    }), 200  # OK
 
 
 @clubs_blueprint.route('/clubs/<string:name>', methods=['PUT'])
