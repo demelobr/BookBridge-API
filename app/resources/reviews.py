@@ -43,6 +43,14 @@ def register_review():
 
 @review_blueprint.route('/reviews/', methods=['GET'])
 def get_all_reviews():
+    """
+    Retorna uma lista de todas as resenhas.
+
+    Este endpoint não recebe parâmetros.
+
+    Retorna:
+        Response: Uma resposta JSON com a lista de todas as resenhas.
+    """
     reviews = Review.query.all()
     all_reviews = []
 
@@ -61,6 +69,17 @@ def get_all_reviews():
 
 @review_blueprint.route('/reviews/<string:title>', methods=['GET'])
 def get_all_reviews_by_book(title):
+    """
+    Retorna uma lista de todas as resenhas de um livro específico.
+
+    Este endpoint recebe o título do livro pela URL.
+
+    Parâmetros:
+        title (str): O título do livro cujas resenhas serão retornadas.
+
+    Retorna:
+        Response: Uma resposta JSON com a lista de todas as resenhas do livro especificado.
+    """
     reviews = Review.query.all()
     all_reviews = []
 
@@ -168,7 +187,18 @@ def delete_review(id):
 
 
 @review_blueprint.route('/reviews/avarage-rating/<string:title>', methods=['GET'])
-def avarage_rating_of_book(title):
+def average_rating_of_book(title):
+    """
+    Calcula a média das classificações de um livro específico.
+
+    Este endpoint recebe o título do livro pela URL.
+
+    Parâmetros:
+        title (str): O título do livro cuja média de classificações será calculada.
+
+    Retorna:
+        Response: Uma resposta JSON com a média das classificações do livro especificado.
+    """
     reviews = Review.query.all()
     total_rating_of_book = 0
     total_of_reviews = 0
@@ -180,4 +210,4 @@ def avarage_rating_of_book(title):
     
     avarage_rating = round(total_rating_of_book / total_of_reviews, 2)
 
-    return jsonify({"avarage rating of book" : "{}".format(avarage_rating)}), 200 # OK
+    return jsonify({"avarage rating of book" : "{}".format(avarage_rating)}), 200  # OK
