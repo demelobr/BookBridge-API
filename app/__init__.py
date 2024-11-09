@@ -10,12 +10,14 @@ from sql_alchemy import db
 
 import os
 
-def create_app():
+def create_app(config_name=None):
     load_dotenv()
 
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.db'
-    app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY')
+    if config_name == 'testing': 
+        app.config.from_object('config.TestingConfig') 
+    else: 
+        app.config.from_object('config.DevelopmentConfig')        
 
     db.init_app(app)
     jwt = JWTManager(app)
