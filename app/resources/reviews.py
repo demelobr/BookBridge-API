@@ -57,6 +57,7 @@ def get_all_reviews():
     for review in reviews:
         review_data = {
             'id': review.id,
+            'book_title': review.book_title,
             'rating': review.rating,
             'comment': review.comment,
             'user_email': review.user_email,
@@ -87,6 +88,7 @@ def get_all_reviews_by_book(title):
         if review.book_title == title:
             review_data = {
                 'id': review.id,
+                'book_title': review.book_title,
                 'rating': review.rating,
                 'comment': review.comment,
                 'user_email': review.user_email,
@@ -114,6 +116,7 @@ def get_review(id):
         return jsonify({"message" : "Review not exists!"}), 404  # Not Found
     
     return jsonify({"id" : "{}".format(review.id),
+                    "book_title": "{}".format(review.book_title),
                     "rating" : "{}".format(review.rating),
                     "comment" : "{}".format(review.comment),
                     "user_email" : "{}".format(review.user_email),
